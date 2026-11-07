@@ -1,16 +1,15 @@
 """Terminal chat: python -m asistan.cli"""
 
-import httpx
-
 from asistan.agent import Agent
 from asistan.config import settings
 from asistan.llm import OpenAICompatibleModel
+from asistan.stok_client import make_stok_client
 
 
 def main() -> None:
     agent = Agent(
         OpenAICompatibleModel(settings.llm_base_url, settings.llm_api_key, settings.llm_model),
-        httpx.Client(base_url=settings.stok_api_url, timeout=15),
+        make_stok_client(settings),
         settings.max_steps,
     )
     print("Stok Asistanı. Çıkmak için boş satır girin.")

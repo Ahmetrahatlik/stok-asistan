@@ -61,6 +61,7 @@ Ortam değişkenleri:
 | `LLM_API_KEY` | `ollama` | Bulut sağlayıcıda gerçek anahtar |
 | `LLM_MODEL` | `qwen2.5:7b` | Araç çağırabilen bir model |
 | `STOK_API_URL` | `http://localhost:8000` | Stok API adresi |
+| `STOK_API_USERNAME` / `STOK_API_PASSWORD` | boş | Stok API'de veri değiştirmek için giriş bilgisi (JWT alınır) |
 | `AGENT_MAX_STEPS` | `6` | Bir soruda en fazla model turu |
 
 HTTP API: `POST /chat` `{"message": "...", "session_id": "..."}` cevabında `pending_action` doluysa `POST /chat/{session_id}/decision` `{"approve": true}` ile onaylanır.

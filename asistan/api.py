@@ -1,12 +1,12 @@
 import uuid
 
-import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from asistan.agent import Agent, AgentReply
 from asistan.config import settings
 from asistan.llm import ChatModel, OpenAICompatibleModel
+from asistan.stok_client import make_stok_client
 
 app = FastAPI(title="Stok Asistanı", description="Natural-language assistant for the Stok API.", version="1.0.0")
 
@@ -16,8 +16,7 @@ _sessions: dict[str, Agent] = {}
 
 def make_agent() -> Agent:
     model: ChatModel = OpenAICompatibleModel(settings.llm_base_url, settings.llm_api_key, settings.llm_model)
-    stok_api = httpx.Client(base_url=settings.stok_api_url, timeout=15)
-    return Agent(model, stok_api, settings.max_steps)
+    return Agent(model, make_stok_client(settings), settings.max_steps)
 
 
 class ChatIn(BaseModel):
